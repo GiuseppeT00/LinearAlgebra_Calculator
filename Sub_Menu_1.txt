@@ -1,0 +1,3 @@
+Which type of values will your matrix contain?
+1) Real.
+2) Complex (doesn't work yet).
