@@ -6,6 +6,9 @@
 #include "RowCol_Product_of_Matrix.h"
 #include "Determinant_of_Matrix.h"
 #include "Reverse_of_Matrix.h"
+#include "Gauss_algorithm.h"
+#include "Rank_of_Matrix.h"
+#include "Linear_System_Compatibility.h"
 
 int main() {
 	ifstream header("Main_Menu1.txt");
@@ -20,6 +23,7 @@ int main() {
 
 		displayAll();
 
+		cout << "Choice: ";
 		cin >> chose;
 
 		if (chose == 0) break;
@@ -35,6 +39,12 @@ int main() {
 		else if (chose == 5) Determinant_of_Matrix();
 
 		else if (chose == 6) Reverse_of_Matrix();
+
+		else if (chose == 7) Gauss_algorithm();
+
+		else if (chose == 8) Rank_of_Matrix();
+
+		else if (chose == 9) Linear_System_Compatibility();
 
 	}
 

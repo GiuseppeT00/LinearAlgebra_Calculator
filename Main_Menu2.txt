@@ -1,0 +1,13 @@
+Hi! In this program you can make a lot of operation with matrix.
+This is the main menu, where you can chose the operation.
+Input the number of operation that you want to do, then press 'enter'.
+0) Exit.
+1) Sum of matrix.
+2) Product of a matrix with a scalar.
+3) Transponse of a matrix.
+4) Rows-Cols product of matrix
+5) Determinant of a matrix
+6) Reverse of a matrix
+7) Gauss algorithm 
+8) Rank of matrix
+9) Linear system compatibility

@@ -3,6 +3,7 @@
 
 #include "Includes.h"
 #include "Class.h"
+#include "Utilities.h"
 
 inline void matrixSum(Matrix& m1, Matrix& m2, Matrix& Sum) {//m2 will be summed on m1, so m1 will be m1 + m2 .
 	for (int i = 0; i < m1.get_rows(); i++)
@@ -118,34 +119,89 @@ inline void matrixReverse(Matrix& M, Matrix& Rev) {
 	withScalar_Product(Rev, DetRev);
 }
 
-
-
-
-
-/*template <typename E> void gauss(Matrix<E>& M) {
-	if (M.get_rows() < 2) return;
-	bool null_col = false;
-	int cnt = 0, j = 0;
-	do //Find the first not null col
-	{
-		for (int i = 0; i < M.get_rows(); i++) 
-			if (M.get_value(i, j) != 0) cnt++;
-		if (cnt == M.get_rows() - 1) null_col = false;
-		j++;
-		if (j == M.get_cols()) return;
-	} while (null_col);
-
-	E* colum = new E[M.get_rows()];
+inline int firstNotNull_Col(Matrix& M) {
 	for (int i = 0; i < M.get_rows(); i++)
+		for (int j = 0; i < M.get_cols(); i++)
+			if (M.get_value(j, i).get_int() != 0) return i;
+	return -1;
+}
+
+inline void rowSwap(Matrix& M, int r1, int r2, int start_col) { 
+	Rational_Number temp;
+	for (int i = start_col; i < M.get_cols(); i++)
 	{
-		colum[i] = M.get_value(i, j);
+		temp = M.get_value(r1, i);
+		M.set_value(r1, i, M.get_value(r2, i));
+		M.set_value(r2, i, temp);
+	}
+}
+
+inline void rowSum(Matrix& M, int r1, int r2, int start_col, Rational_Number& lambda) {
+	for (int i = start_col; i < M.get_cols(); i++)
+		M.set_value(r2, i, M.get_value(r2, i) - (lambda * M.get_value(r1, i)));
+}
+
+inline void gaussAlgorithm(Matrix& M, int row, int col) {
+	if (row >= M.get_rows() || col >= M.get_cols()) return;
+
+	if (M.get_value(row, col).get_int() == 0) {
+
+		for (int i = row + 1; i < M.get_rows(); i++)
+
+			if (M.get_value(i, col).get_int() != 0) {
+
+				rowSwap(M, row, i, col);
+				break;
+			}
 	}
 
-}*/
+	if (M.get_value(row, col).get_int() == 0) return;
 
+	for (int i = row + 1; i < M.get_rows(); i++)
 
+		if (M.get_value(i, col).get_int() != 0) {
 
+			Rational_Number coeff = (M.get_value(i, col) / M.get_value(row, col));
+			rowSum(M, row, i, col, coeff);
+		}
 
+	gaussAlgorithm(M, ++row, ++col);
+}
 
+inline int matrixRank(Matrix& M) {
+	int c = firstNotNull_Col(M);
+
+	if (c == -1) return 0;
+
+	int pivot = 0;
+
+	gaussAlgorithm(M, 0, c);
+
+	for (int i = 0; i < M.get_rows(); i++)
+		for (int j = 0; j < M.get_cols(); j++)
+			if (M.get_value(i, j).get_int() != 0) {
+				pivot++;
+				break;
+			}
+
+	return pivot;
+}
+
+inline bool linearSystem_Compatibility(Matrix& A, Matrix& b) {
+	Matrix A_b(A.get_rows(), A.get_cols() + b.get_cols());
+
+	for (int i = 0; i < A_b.get_rows(); i++)
+
+		for (int j = 0; j < A_b.get_cols(); j++)
+		{
+			if (j < A_b.get_cols() - 1) A_b.set_value(i, j, A.get_value(i, j));
+
+			else A_b.set_value(i, j, b.get_value(i, 0));
+		}
+
+	if (matrixRank(A) == matrixRank(A_b)) return true;
+	
+	else return false;
+}
 
 #endif // !FUNCTIONS_H

@@ -1,3 +1,5 @@
+VERSION 2.1.0 !	
+
 Hi! This is a small tutorial on how to use my cpp program.
 First of all, you need to insert the number of operation that you want to do.
 For example, if you chose 1, and press enter, the program will ask you to insert
@@ -16,9 +18,19 @@ The most important thing, is to write numbers in this way:
 -In a fraction number, there must NOT be space between number and '/';
 -All different elements of the matrix must be separated by space;
 
+*Actual features* 
+- Sum of matrix.
+- Product of a matrix with a scalar.
+- Transponse of a matrix.
+- Rows-Cols product of matrix
+- Determinant of a matrix
+- Reverse of a matrix
+- Gauss algorithm //NEW!!
+- Rank of matrix //NEW!!
+- Linear system compatibility //NEW!!
+
 *Next features*
--Gauss algorithm
--Rank calculator
--Linear system resolver
+-Linear system solutions
+-Mutual position of straight lines
 -Mutual position of straight line and plan
 -Complex numbers support
